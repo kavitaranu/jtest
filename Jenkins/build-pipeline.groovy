@@ -21,7 +21,7 @@ pipeline {
         def serviceName = 'jtest-1'
         def serviceUser = 'jtest'
         def dockerRegistry = '564623767830.dkr.ecr.eu-west-1.amazonaws.com'
-        def dockerImage = "python3-app:${BUILD_NUMBER}"
+        def dockerImage = "python3-app"
         def dockerFile = 'Dockerfile'
         def gitRepo='https://github.com/kavitaranu/jtest.git'
         def debianCredentialsName = 'nexmo-ops.pem'
@@ -82,7 +82,7 @@ pipeline {
                     sh 'sudo $(aws ecr get-login --no-include-email --region eu-west-1)'
 
                     //sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host  -t ${env.dockerImage}:${dockerTag} ."
-                    sh "sudo docker build"
+                    sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host -t ${env.dockerRegistry}/${env.dockerImage}:${dockerTag} ."
 
 
                     // Push image
