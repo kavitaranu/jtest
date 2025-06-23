@@ -9,3 +9,7 @@ buildscript {
 }
 
 apply plugin: "com.github.maiflai.python"
+
+python {
+    interpreter = "python3"
+}
