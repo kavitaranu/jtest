@@ -79,12 +79,9 @@ pipeline {
                     }
 
                     // ECR login
-                    //sh 'sudo $(aws ecr get-login --no-include-email --region eu-west-1)'
+                    sh 'sudo $(aws ecr get-login --no-include-email --region eu-west-1)'
                     //sh 'aws ecr get-login-password --region eu-west-1 | sudo docker login --username AWS --password-stdin 760258808129.dkr.ecr.eu-west-1.amazonaws.com'
-                    sh '''
-aws ecr get-login-password --region eu-west-1 | \
-sudo docker login --username AWS --password-stdin 760258808129.dkr.ecr.eu-west-1.amazonaws.com
-'''
+
 
 
 
@@ -97,7 +94,7 @@ sudo docker login --username AWS --password-stdin 760258808129.dkr.ecr.eu-west-1
                     if (status == 0) {
                         echo "Image already present, replacing."
                     }
-                    sh "sudo docker push ${env.dockerRegistry}/${env.dockerImage}:${dockerTag}"
+                    sh "sudo docker push  ${env.dockerImage}:${dockerTag}"
                 }
             }
         }
