@@ -61,13 +61,8 @@ pipeline {
             }
         }
 
-        stage('Gradle Build') {
-            when {
-                anyOf {
-                    branch 'develop'
-                    expression {return params.BUILD}
-                }
-            }
+        stage('build docker image') {
+
             steps {
                 echo 'Building Debian package'
                 withCredentials([file(credentialsId: debianCredentialsName, variable: 'CREDENTIALS')]) {
@@ -78,7 +73,6 @@ pipeline {
                         def GRADLE_TASKS = tasks.join(' ')
 
                         echo "Creating package for ${env.branch}@${env.hash}"
-                        sh "./gradlew ${GRADLE_TASKS} --parallel --no-daemon ${DEBUG_FLAGS} -PgitBranch=${env.branch} -PgitCommit=${env.hash}"
                     }
                 }
             }
