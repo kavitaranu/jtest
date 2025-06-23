@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.maiflain.python" version "0.25.0"
+    id 'com.github.maiflai.python' version '0.25.0'
 }
 version "0.8"
 defaultTasks 'build'
