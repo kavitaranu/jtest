@@ -81,15 +81,7 @@ pipeline {
                     // ECR login
                     sh 'sudo $(aws ecr get-login --no-include-email --region eu-west-1)'
 
-                    // Find Debian packages
-                    def basename = "jtest_1_${env.timestamp}+${env.branch}+${env.hash}-1_all"
-                    def localPath = "jtest-service/build/distributions/${basename}.deb"
-                    status = sh(returnStatus:true, script:"test -f ${localPath}")
-                    if (status != 0) {
-                        echo "Cannot find expected .deb package ${localPath}"
-                        localPath = findFiles(glob: "jtest-service/build/distributions/jtest_1_*-1_all.deb")[0].path
-                        echo "Using ${localPath} instead"
-                    }
+
 
                     // Build Docker image
                     sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host --build-arg service_name=${env.serviceName} --build-arg service_user=${env.serviceUser} --build-arg service_group=nexmo --build-arg service_uid=1194 --build-arg service_gid=201 --build-arg jwt_group=jtest_1 --build-arg jwt_gid=1039 --build-arg local_deb_path=${localPath} -t ${env.dockerRegistry}/${env.dockerImage}:${dockerTag} ."
