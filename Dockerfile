@@ -1,4 +1,3 @@
-//FROM 564623767830.dkr.ecr.eu-west-1.amazonaws.com/nexmo-java:8-corretto-jdk-minideb
 FROM python:3.10-slim-buster
 LABEL maintainer="core.platform@nexmo.com"
 
