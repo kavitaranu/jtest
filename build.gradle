@@ -1,18 +1,11 @@
 buildscript {
     repositories {
-        mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
     }
 
     dependencies {
-        classpath "com.github.maiflai:gradle-python-plugin:0.25.0"
+        classpath "com.github.maiflai:gradle-python-plugin:0.8"
     }
 }
 
 apply plugin: "com.github.maiflai.python"
-version "0.8"
-defaultTasks 'build'
-
-task build(type: Exec){
-    commandLine 'python3', 'app/api_call_token.py'
-}
