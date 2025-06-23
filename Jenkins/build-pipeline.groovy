@@ -82,7 +82,7 @@ pipeline {
                     sh 'sudo $(aws ecr get-login --no-include-email --region eu-west-1)'
 
                     //sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host  -t ${env.dockerImage}:${dockerTag} ."
-                    sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host -t ${env.dockerRegistry}/${env.dockerImage}"
+                    sh "sudo docker build -t ${env.dockerRegistry}/${env.dockerImage}"
 
 
                     // Push image
