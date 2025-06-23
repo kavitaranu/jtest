@@ -80,7 +80,12 @@ pipeline {
 
                     // ECR login
                     //sh 'sudo $(aws ecr get-login --no-include-email --region eu-west-1)'
-                    sh 'aws ecr get-login-password --region eu-west-1 | sudo docker login --username AWS --password-stdin 760258808129.dkr.ecr.eu-west-1.amazonaws.com'
+                    //sh 'aws ecr get-login-password --region eu-west-1 | sudo docker login --username AWS --password-stdin 760258808129.dkr.ecr.eu-west-1.amazonaws.com'
+                    sh '''
+aws ecr get-login-password --region eu-west-1 | \
+sudo docker login --username AWS --password-stdin 760258808129.dkr.ecr.eu-west-1.amazonaws.com
+'''
+
 
 
                     //sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host  -t ${env.dockerImage}:${dockerTag} ."
