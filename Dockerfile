@@ -3,5 +3,5 @@ LABEL maintainer="core.platform@nexmo.com"
 
 WORKDIR /app
 COPY . /app
-RUN pip install -r requirements.txt
+RUN pip install
 CMD ["python3", "-m", "app.api_call_token"]
