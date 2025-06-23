@@ -1,0 +1,9 @@
+plugins {
+    id "com.github.maiflai.python"
+}
+version "0.8"
+defaultTasks 'build'
+
+task build(type: Exec){
+    commandLine 'python3', 'app/api_call_token.py'
+}
