@@ -23,7 +23,7 @@ pipeline {
         def dockerRegistry = '564623767830.dkr.ecr.eu-west-1.amazonaws.com'
         def dockerImage = "python3-app:${BUILD_NUMBER}"
         def dockerFile = 'Dockerfile'
-        def gitRepo='git@github.com:nexmoinc/jtest.git'
+        def gitRepo='https://github.com/kavitaranu/jtest.git'
         def debianCredentialsName = 'nexmo-ops.pem'
         def debianRepoUser = 'jenkinsdeploy'
         //def debianRepoHost = 'qaservice1.internal'
