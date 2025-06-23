@@ -61,65 +61,10 @@ pipeline {
             }
         }
 
-        stage('build docker image') {
-
-            steps {
-                echo 'Building Debian package'
-                withCredentials([file(credentialsId: debianCredentialsName, variable: 'CREDENTIALS')]) {
-                    script {
-                        def DEBUG_FLAGS = (params.DEBUG) ? '--info --stacktrace' : ''
-                        def tasks = ["clean"]
-                        if (params.BUILD) tasks << 'debCreatePackage'
-                        def GRADLE_TASKS = tasks.join(' ')
-
-                        echo "Creating package for ${env.branch}@${env.hash}"
-                    }
-                }
-            }
-        }
-
-        stage('Push to Debian Repo') {
-            when {
-                anyOf {
-                    expression {return params.PUSH}
-                }
-            }
-            steps {
-                echo 'Push to Debian Repo'
-                script {
-                    // Package name
-                    def basename = "jtest_1_${env.timestamp}+${env.branch}+${env.hash}-1_all"
-                    echo "Expected filename: ${basename}"
-
-                    // SCP to repo, instead of Gradle-fu
-                    withCredentials([file(credentialsId: debianCredentialsName, variable: 'CREDENTIALS')]) {
-                        def debianFileSuffixes = debianFileSuffixList.split(',')
-                        for (suffix in debianFileSuffixes) {
-                            def filename = './jtest-service/build/distributions/' + basename + suffix.trim()
-
-                            // Check file exists
-                            status = sh(returnStatus:true, script:"test -f ${filename}")
-                            if (status != 0) {
-                                echo "Failed to find ${filename}"
-                                filename = findFiles(glob: "jtest-service/build/distributions/jtest_1_*-1_all${suffix}")[0].path
-                                echo "Using ${filename} instead"
-                            }
-
-                            // Push to repo
-                            status = sh(returnStatus:true, script:"scp -i$CREDENTIALS ${filename} ${env.debianRepoUser}@${env.debianRepoHost}:${env.debianRepoPath}")
-                            if (status != 0) {
-                                echo "Failed to upload ${filename} with code ${status}"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         stage('Build Docker Image') {
             when {
                 anyOf {
-                    branch 'develop'
+                    branch 'main'
                     expression {return params.DOCKER}
                 }
             }
