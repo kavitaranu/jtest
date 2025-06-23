@@ -20,7 +20,7 @@ pipeline {
     environment {
         def serviceName = 'jtest-1'
         def serviceUser = 'jtest'
-        def dockerRegistry = '760258808129.dkr.ecr.eu-west-1.amazonaws.com'
+        def dockerRegistry = '564623767830.dkr.ecr.eu-west-1.amazonaws.com'
         def dockerImage = "python3-app"
         def dockerFile = 'Dockerfile'
         def gitRepo='https://github.com/kavitaranu/jtest.git'
@@ -94,7 +94,7 @@ pipeline {
                     if (status == 0) {
                         echo "Image already present, replacing."
                     }
-                    sh "sudo docker push  ${env.dockerImage}:${dockerTag}"
+                    sh "sudo docker push ${env.dockerRegistry}/${env.dockerImage}:${dockerTag}"
                 }
             }
         }
