@@ -81,7 +81,9 @@ pipeline {
                     // ECR login
                     sh 'sudo $(aws ecr get-login --no-include-email --region eu-west-1)'
 
-                    sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host  -t ${env.dockerImage}:${dockerTag} ."
+                    //sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host  -t ${env.dockerImage}:${dockerTag} ."
+                    sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host -t ${env.dockerRegistry}/${env.dockerImage}:${dockerTag} ."
+
 
                     // Push image
                     status = sh(returnStatus:true, script:"aws ecr describe-images --repository-name=${env.dockerImage} --image-ids=imageTag=${dockerTag} --region eu-west-1")
