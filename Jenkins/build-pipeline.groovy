@@ -81,7 +81,7 @@ pipeline {
                     // ECR login
                     sh 'sudo $(aws ecr get-login --no-include-email --region eu-west-1)'
 
-                    sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host --build-arg service_name=${env.serviceName} --build-arg service_user=${env.serviceUser} --build-arg service_group=nexmo --build-arg service_uid=1194 --build-arg service_gid=201 --build-arg jwt_group=jtest_1 --build-arg jwt_gid=1039  --t ${env.dockerRegistry}/${env.dockerImage}:${dockerTag} ."
+                    sh "sudo docker build -f ${env.dockerFile} --no-cache --network=host --build-arg service_name=${env.serviceName} --build-arg service_user=${env.serviceUser} --build-arg service_group=nexmo --build-arg service_uid=1194 --build-arg service_gid=201 --build-arg jwt_group=jtest_1 --build-arg jwt_gid=1039  -t ${env.dockerRegistry}/${env.dockerImage}:${dockerTag} ."
 
                     // Push image
                     status = sh(returnStatus:true, script:"aws ecr describe-images --repository-name=${env.dockerImage} --image-ids=imageTag=${dockerTag} --region eu-west-1")
