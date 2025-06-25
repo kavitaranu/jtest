@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Run the app
-CMD ["python3", "-m", "app.api_call_token"]
+CMD ["python3", "-m", "app.validate_phone"]
