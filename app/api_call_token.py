@@ -1,31 +1,31 @@
 import requests
-def validate_phone_number(phone_number):
-    api_key = "YOUR_API_KEY"
-    url = "http://apilayer.net/api/validate"
+import sys
 
-    params = {
-        "access_key": api_key,
-        "number": phone_number,
-        "format": 1
+def validate_phone_number(phone_number):
+    url = "https://api-eu.dev.v1.vonagenetworks.net/auth/token"  # <-- replace with your actual API
+    token = "YOUR_BEARER_TOKEN"  # <-- you can also read this from env or a secure store
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "phone_number": phone_number
     }
 
     try:
-        response = requests.get(url, params=params)
+        response = requests.post(url, json=payload, headers=headers)
         response.raise_for_status()
         data = response.json()
-        print("Full API response:", data)  # debug print here
-
-        if data.get("valid"):
-            print("Phone number is valid.")
-            print("Country:", data.get("country_name"))
-            print("Carrier:", data.get("carrier"))
-            print("Line Type:", data.get("line_type"))
-        else:
-            print("Invalid phone number.")
-
+        print("API Response:", data)
     except requests.exceptions.RequestException as e:
         print("API call failed:", e)
 
 if __name__ == "__main__":
-    phone = input("Enter phone number (with country code, e.g. +14158586273): ")
+    if len(sys.argv) < 2:
+        print("Usage: python3 validate_phone.py <phone_number>")
+        sys.exit(1)
+
+    phone = sys.argv[1]
     validate_phone_number(phone)
