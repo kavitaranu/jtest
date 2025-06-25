@@ -3,7 +3,7 @@ import sys
 
 def validate_phone_number(phone_number):
     # Dummy internal API endpoint (replace with actual later)
-    url = "https://api-eu.dev.v1.vonagenetworks.net/v1/validate-phone"
+    url = "https://httpbin.org/post"
 
     # Simulated token (replace with real token when available)
     token = "test_dummy_token_123"
