@@ -2,23 +2,35 @@ import requests
 import sys
 
 def validate_phone_number(phone_number):
-    url = "https://api-eu.dev.v1.vonagenetworks.net/auth/token"  # <-- replace with your actual API
-    token = "YOUR_BEARER_TOKEN"  # <-- you can also read this from env or a secure store
+    # Dummy internal API endpoint (replace with actual later)
+    url = "https://api-eu.dev.v1.vonagenetworks.net/v1/validate-phone"
+
+    # Simulated token (replace with real token when available)
+    token = "test_dummy_token_123"
 
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
     }
 
+    # Simulated payload structure
     payload = {
         "phone_number": phone_number
     }
 
     try:
+        print(f"Sending request to {url} with phone number {phone_number}")
         response = requests.post(url, json=payload, headers=headers)
-        response.raise_for_status()
-        data = response.json()
-        print("API Response:", data)
+        print("Status Code:", response.status_code)
+
+        # If you expect JSON back
+        try:
+            data = response.json()
+            print("API Response:", data)
+        except ValueError:
+            print("Non-JSON response received.")
+            print(response.text)
+
     except requests.exceptions.RequestException as e:
         print("API call failed:", e)
 
