@@ -2,10 +2,10 @@ import requests
 import sys
 
 def validate_phone_number(phone_number):
-    # Dummy internal API endpoint (replace with actual later)
-    url = "https://httpbin.org/post"
+    # Dummy internal API endpoint for GET
+    url = "https://httpbin.org/get"
 
-    # Simulated token (replace with real token when available)
+    # Simulated token
     token = "test_dummy_token_123"
 
     headers = {
@@ -13,17 +13,16 @@ def validate_phone_number(phone_number):
         "Content-Type": "application/json"
     }
 
-    # Simulated payload structure
-    payload = {
+    # Query parameters instead of JSON body
+    params = {
         "phone_number": phone_number
     }
 
     try:
-        print(f"Sending request to {url} with phone number {phone_number}")
-        response = requests.post(url, json=payload, headers=headers)
+        print(f"Sending GET request to {url} with phone number {phone_number}")
+        response = requests.get(url, headers=headers, params=params)
         print("Status Code:", response.status_code)
 
-        # If you expect JSON back
         try:
             data = response.json()
             print("API Response:", data)
